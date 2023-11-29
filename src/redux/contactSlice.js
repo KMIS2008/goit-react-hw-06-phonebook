@@ -26,8 +26,7 @@ const contactBook = [
 
         removeContact (state, action){
             state = state.filter(contact=> contact.id !== action.payload)
-        }
-        
+        } 
     }
 }
   )

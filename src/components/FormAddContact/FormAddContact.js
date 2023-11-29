@@ -6,7 +6,9 @@ import { FormStyle,
          ErrorMsg} from './FormAdContact.styled';
 import * as Yup from 'yup';
 
-
+import { addContact } from 'redux/contactSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import { getContacts } from 'redux/selects'; 
  
          const SignupSchema = Yup.object().shape({
            name: Yup.string()
@@ -18,7 +20,22 @@ import * as Yup from 'yup';
              .required('Required'),
          });
 
-export const FormAddContact = ({onAdd})=> {
+export const FormAddContact = ()=> {
+const contacts = useSelector(getContacts);
+const dispatch = useDispatch();
+
+const addContacts =(newContact)=> {
+    
+  const newAddContact = contacts.some(contact=> newContact.name.toLowerCase().trim() === contact.name.toLowerCase());
+
+    if(newAddContact){
+      alert(`${newContact.name} is already in contacts`);
+      return;
+    } 
+
+    dispatch(addContact(newContact))
+}
+
     return (
   <div>
     <Formik
@@ -30,7 +47,7 @@ export const FormAddContact = ({onAdd})=> {
       validationSchema = {SignupSchema}
 
       onSubmit={(values, actions) => {
-        onAdd(values);
+        addContacts(values);
         actions.resetForm();
       }}
 

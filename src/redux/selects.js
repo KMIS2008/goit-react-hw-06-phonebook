@@ -1,13 +1,21 @@
 export const getContacts=state=>state.contact;
-export const getFilterValue = state => state.filter.value;
+export const getFilterValue = state => state.filter;
 
 export const getVisibleContacts = state => {
-    const contacts = getContacts(state); // Получает список контактов
-    const filter = getFilterValue(state); // Получает текущий фильтр
-    const normalizedFilter = filter.toLowerCase(); // Преобразует фильтр в нижний регистр
-  
-    // Фильтрует контакты, чтобы возвращать только те, чьи имена содержат подстроку фильтра (в нижнем регистре)
+    const contacts = getContacts(state); 
+    const filter = getFilterValue(state); 
+
+    if (!filter) {
+        return contacts;
+      }
+
     return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
+      contact.name.toLowerCase().includes(filter.toLowerCase())
     );
   };
+
+
+//   const visibleContact = contacts.filter(contact=>{
+    //     const hasContact = contact.name.toLowerCase().includes(filter.toLowerCase());
+    //     return hasContact;
+    //   })
