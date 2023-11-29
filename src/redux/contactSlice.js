@@ -43,4 +43,4 @@ const contactBook = [
 
   export const prestirReduserContact = persistReducer (persistConfig, contactReduser );
 
-  export const getContacts=state=>state.contact;
+  
